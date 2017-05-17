@@ -1,0 +1,25 @@
+Q1: What is the difference between EBS and S3?
+
+S3, Simple Storage Service, is an Amazon offering that allows us to set up simple cloud-based storage. According to the ads, Amazon S3 stores data in a flat non-hierarchy, and is supremely suited for storage scenarios that don't require alot of read-write operations, e.g. backups. Amazon EBS on the other hand, is designed to work with EC2 instances, and is more similar to traditional  file systems. It can be used to power big data solutions like a Hadoop instance, or an RDBMS.
+
+https://www.cloudberrylab.com/blog/amazon-s3-vs-amazon-ebs/
+https://aws.amazon.com/ebs/
+
+Q2: When would you consider a cloud infrastructure for your data science tasks?
+
+We might want to use cloud infrastructure when the project, or the client, does not have easy access to infrastructure hardware, in-house infrastructure team, in-house datacenter expertise, or money to purchase all that. Also useful if we really want to get something started as a pilot or proof of concept, and do not want to invest too much money upfront without something that we know will work.
+
+Q3: What is the difference between spot instances and reserved instances?
+
+Both are AWS EC2 purchasing options. Spot instances allows us to bid on unused EC2 instances, which can lower our EC2 costs. The tradeoff is that we can loose our instance if there are not enough unused instances, and we are outbid. In contrast, reserved instances allows us to reserve capacity for 1 to 3 years; still theoretically cheaper in the long run vs On-Demand instances.
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html?icmpid=docs_ec2_console
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html
+
+Q4: List the names of four software packages installed on the UCB AMI
+
+python 2.6.6
+perl 5.10.1
+java 1.7.0_79
+sqlite3 3.6.20
