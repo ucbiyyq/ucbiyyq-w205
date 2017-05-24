@@ -1,0 +1,34 @@
+##Submissions:
+
+
+
+List the HDFS contents of /user
+
+[w205@ip-172-31-76-112 ~]$ hdfs dfs -ls /user
+Found 8 items
+drwxr-xr-x   - mapred  supergroup          0 2017-05-24 10:20 /user/history
+drwxrwxrwx   - hive    supergroup          0 2017-05-24 10:20 /user/hive
+drwxrwxrwx   - hue     supergroup          0 2017-05-24 10:20 /user/hue
+drwxrwxrwx   - jenkins supergroup          0 2017-05-24 10:20 /user/jenkins
+drwxrwxrwx   - oozie   supergroup          0 2017-05-24 10:21 /user/oozie
+drwxrwxrwx   - root    supergroup          0 2017-05-24 10:20 /user/root
+drwxr-xr-x   - hdfs    supergroup          0 2017-05-24 10:21 /user/spark
+drwxr-xr-x   - w205    supergroup          0 2017-05-24 10:22 /user/w205
+
+
+
+Inspect the output of the HDFS admin report and answer the following questions in a text file.
+
+-To generate this, exit from the w205 user and type: sudo -u hdfs hdfs dfsadmin -report
+
+Q1: How many live datanodes are there?
+
+1
+
+Q2: How much non-DFS storage is used?
+
+5.1 GB
+
+Q3: How much DFS storage is used?
+
+136.87 mb
