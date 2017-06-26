@@ -1,0 +1,92 @@
+CREATE SCHEMA IF NOT EXISTS hospital_compare;
+
+DROP TABLE hospital_compare.land_hcahps_hospital;
+
+CREATE EXTERNAL TABLE hospital_compare.land_hcahps_hospital (
+    provider_id VARCHAR(50),
+    hospital_name VARCHAR(100),
+    address VARCHAR(100),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    zip_code VARCHAR(50),
+    county_name VARCHAR(50),
+    phone_number VARCHAR(50),
+    hcahps_measure_id VARCHAR(50),
+    hcahps_question VARCHAR(200),
+    hcahps_answer_description VARCHAR(50),
+    patient_survey_star_rating VARCHAR(50),
+    patient_survey_star_rating_footnote VARCHAR(500),
+    hcahps_answer_percent VARCHAR(50),
+    hcahps_answer_percent_footnote VARCHAR(500),
+    hcahps_linear_mean_value VARCHAR(50),
+    number_of_completed_surveys VARCHAR(50),
+    number_of_completed_surveys_footnote VARCHAR(500),
+    survey_response_rate_percent VARCHAR(50),
+    survey_response_rate_percent_footnote VARCHAR(500),
+    measure_start_date VARCHAR(50),
+    measure_end_date VARCHAR(50)
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES ( "separatorChar" = "," , "quoteChar" = '"' , "escapeChar" = '\\' )
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/hcahps_hospital';
+
+DROP TABLE hospital_compare.discover_hcahps_hospital;
+
+CREATE TABLE hospital_compare.discover_hcahps_hospital AS
+SELECT
+    provider_id,
+    hospital_name,
+    hcahps_measure_id,
+    hcahps_question,
+    hcahps_answer_description,
+
+    CASE 
+        WHEN patient_survey_star_rating IN ('Not Available', 'Not Applicable') THEN NULL 
+        ELSE CAST(patient_survey_star_rating AS INT)
+    END AS patient_survey_star_rating,
+
+    CASE 
+        WHEN patient_survey_star_rating_footnote = '' THEN NULL 
+        ELSE patient_survey_star_rating_footnote 
+    END AS patient_survey_star_rating_footnote,
+
+    CASE 
+        WHEN hcahps_answer_percent IN ('Not Available', 'Not Applicable') THEN NULL 
+        ELSE CAST(hcahps_answer_percent AS INT) 
+    END AS hcahps_answer_percent,
+
+    CASE 
+        WHEN hcahps_answer_percent_footnote = '' THEN NULL 
+        ELSE hcahps_answer_percent_footnote 
+    END AS hcahps_answer_percent_footnote,
+
+    CASE
+        WHEN hcahps_linear_mean_value IN ('Not Available', 'Not Applicable') THEN NULL
+        ELSE CAST(hcahps_linear_mean_value AS INT)
+    END AS hcahps_linear_mean_value,
+
+    CASE
+        WHEN number_of_completed_surveys IN ('Not Available', 'Not Applicable') THEN NULL
+        ELSE CAST(number_of_completed_surveys AS INT)
+    END AS number_of_completed_surveys,
+
+    CASE 
+        WHEN number_of_completed_surveys_footnote = '' THEN NULL 
+        ELSE number_of_completed_surveys_footnote 
+    END AS number_of_completed_surveys_footnote,
+
+    CASE 
+        WHEN survey_response_rate_percent IN ('Not Available', 'Not Applicable') THEN NULL 
+        ELSE CAST(survey_response_rate_percent AS INT) 
+    END AS survey_response_rate_percent,
+
+    CASE 
+        WHEN survey_response_rate_percent_footnote = '' THEN NULL 
+        ELSE survey_response_rate_percent_footnote 
+    END AS survey_response_rate_percent_footnote,
+
+    UNIX_TIMESTAMP(measure_start_date, 'MM/dd/yyyy') AS measure_start_date,
+    UNIX_TIMESTAMP(measure_end_date, 'MM/dd/yyyy') AS measure_end_date
+FROM hospital_compare.land_hcahps_hospital;
+
