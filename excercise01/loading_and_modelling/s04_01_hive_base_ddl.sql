@@ -21,12 +21,4 @@ WITH SERDEPROPERTIES ( "separatorChar" = "," , "quoteChar" = '"' , "escapeChar" 
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
 
-DROP TABLE hospital_compare.discover_hospitals;
-
-CREATE TABLE hospital_compare.discover_hospitals AS
-SELECT
-    provider_id,
-    hospital_name,
-    state
-FROM hospital_compare.land_hospitals;
 
