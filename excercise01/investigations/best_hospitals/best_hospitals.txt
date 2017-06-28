@@ -13,7 +13,10 @@ provider_id  hospital_name  better_score  survey_items_count  aggregate_score
 370210  OKLAHOMA SURGICAL HOSPITAL, LLC 4       13      0.3076923076923077
 
 
+min_aggregate_score     avg_aggregate_score     max_aggregate_score     rng_aggregate_score
+0.0                     0.014534022988120223    0.52                    0.52
 
+    
 
 We decided to use performance on the Complications and Readmissions & Death surveys as a proxy for hospital performance. A list of the best hospitals can roughly be seen as a list of hospitals that did well on the surveys. Because the data dictionary was not clear about what score, denominator, etc meant, we decided to count the number of survey items where the hospital did better than the national rate.
 

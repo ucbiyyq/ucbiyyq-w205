@@ -15,6 +15,7 @@ AZ      35      1293    0.027068832173240527
 FL      98      3904    0.025102459016393443
 
 
+min_aggregate_score     avg_aggregate_score     max_aggregate_score     rng_aggregate_score
 
 
 We decided to use performance on the Complications and Readmissions & Death surveys as a proxy for state performance. A list of the best states can roughly be seen as a list of states that more hospitals that did well on the surveys. We decided to count the number of hospitals that did better than the national rate.

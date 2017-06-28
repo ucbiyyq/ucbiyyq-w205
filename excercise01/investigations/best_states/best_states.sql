@@ -1,6 +1,9 @@
 USE hospital_compare;
 
 --best states = those who had more hospitals who did well in the complications and readmissions & deaths surveys
+DROP TABLE hospital_compare.discover_best_states;
+
+CREATE TABLE hospital_compare.discover_best_states AS
 WITH step1a AS (
     --gets relevant raw data from complications survey
     SELECT 
@@ -47,8 +50,21 @@ WITH step1a AS (
         better_score / number_of_hospitals AS aggregate_score
     FROM step3
 )
+SELECT state, better_score, number_of_hospitals, aggregate_score
+FROM step4;
+
+
 --finds the first ten entries by the aggregate score
 SELECT state, better_score, number_of_hospitals, aggregate_score
-FROM step4
+FROM hospital_compare.discover_best_states
 ORDER BY aggregate_score DESC, state ASC
 LIMIT 10;
+
+
+--finds the average, aggregate, and variability of the aggregate score
+SELECT 
+    MIN(aggregate_score) AS min_aggregate_score,
+    AVG(aggregate_score) AS avg_aggregate_score,
+    MAX(aggregate_score) AS max_aggregate_score,
+    MAX(aggregate_score) - MIN(aggregate_score) AS rng_aggregate_score
+FROM hospital_compare.discover_best_states;
