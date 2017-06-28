@@ -1,0 +1,2 @@
+Based on run of hospitals_and_patients.sql, first 10 rows only
+
