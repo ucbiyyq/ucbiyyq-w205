@@ -1,2 +1,24 @@
 Based on run of hospitals_and_patients.sql, first 10 rows only
 
+provider_number  hospital_name  hcahps_base_score
+050697  PATIENTS' HOSPITAL OF REDDING   80
+170190  MANHATTAN SURGICAL HOSPITAL LLC 80
+170203  PREMIER SURGICAL INSTITUTE      80
+180149  T J HEALTH COLUMBIA     80
+190255  PARK PLACE SURGICAL HOSPITAL    80
+280131  MIDWEST SURGICAL HOSPITAL LLC   80
+360352  SURGICAL HOSPITAL AT SOUTHWOODS 80
+390316  SURGICAL INSTITUTE OF READING   80
+390323  ADVANCED SURGICAL HOSPITAL      80
+390324  PHYSICIAN'S CARE SURGICAL HOSPITAL      80
+
+
+
+min_hcahps_base_score   avg_hcahps_base_score   max_hcahps_base_score   rng_hcahps_base_score
+0                       20.012207527975583      80                      80
+
+
+We decided to use performance on the HVBP survey as a proxy for good hospital-patient relationship. Specifically, we aggregated the HCAHPS base score.
+
+
+Note, the results only lists the first ten rows, which is not the top ten hospitals, thanks to ties in the scores.

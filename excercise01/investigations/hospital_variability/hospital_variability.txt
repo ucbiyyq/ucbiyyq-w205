@@ -1,18 +1,27 @@
 Based on run of hospital_variability.sql, first 10 rows only
 
 provider_id  hospital_name  better_score  worse_score  survey_items_count  aggregate_score
-DE      7       142     0.04929577464788732
-MA      55      1355    0.04059040590405904
-NJ      51      1450    0.03517241379310345
-MI      75      2286    0.03280839895013123
-ID      13      406     0.03201970443349754
-DC      5       159     0.031446540880503145
-IL      96      3198    0.0300187617260788
-CA      177     6127    0.02888852619552799
-AZ      35      1293    0.027068832173240527
-FL      98      3904    0.025102459016393443
+100087  SARASOTA MEMORIAL HOSPITAL      13      0       25      0.52
+340002  MEMORIAL MISSION HOSPITAL AND ASHEVILLE SURGERY CE      10      3       25      0.52
+070022  YALE-NEW HAVEN HOSPITAL 5       7       25      0.48
+230130  BEAUMONT HOSPITAL, ROYAL OAK    5       7       25      0.48
+100007  FLORIDA HOSPITAL        3       8       25      0.44
+390174  THOMAS JEFFERSON UNIVERSITY HOSPITAL    3       8       25      0.44
+050739  CENTINELA HOSPITAL MEDICAL CENTER       7       3       23      0.43478260869565216
+050625  CEDARS-SINAI MEDICAL CENTER     6       4       25      0.4
+140010  EVANSTON HOSPITAL       8       2       25      0.4
+220074  SOUTHCOAST HOSPITAL GROUP, INC  6       4       25      0.4
+
 
 
 min_aggregate_score     avg_aggregate_score     max_aggregate_score     rng_aggregate_score
-0.0                     0.016832576656949795    0.04929577464788732     0.04929577464788732
+0.0                     0.036322677283830165    0.52                    0.52
 
+
+We decided to use performance on the Complications and Readmissions & Death surveys as a proxy for hospital performance. We chose to interpret high variability when the hospital has more better or worse rating vs the national rate, and low variability when those numbers are low.
+
+
+The aggregate score is calculated as count of Better-than-the-National-Rate + Worse-than-the-National-Rate survey items, normalized by the number of survey items that could be counted for the hospital, per hospital. 
+
+
+Note, the results only lists the first ten rows, which is not the top ten hospitals, thanks to ties in the scores.
