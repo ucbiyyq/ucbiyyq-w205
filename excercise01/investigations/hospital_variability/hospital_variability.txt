@@ -1,2 +1,18 @@
 Based on run of hospital_variability.sql, first 10 rows only
 
+provider_id  hospital_name  better_score  worse_score  survey_items_count  aggregate_score
+DE      7       142     0.04929577464788732
+MA      55      1355    0.04059040590405904
+NJ      51      1450    0.03517241379310345
+MI      75      2286    0.03280839895013123
+ID      13      406     0.03201970443349754
+DC      5       159     0.031446540880503145
+IL      96      3198    0.0300187617260788
+CA      177     6127    0.02888852619552799
+AZ      35      1293    0.027068832173240527
+FL      98      3904    0.025102459016393443
+
+
+min_aggregate_score     avg_aggregate_score     max_aggregate_score     rng_aggregate_score
+0.0                     0.016832576656949795    0.04929577464788732     0.04929577464788732
+
