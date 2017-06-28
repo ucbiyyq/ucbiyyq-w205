@@ -20,4 +20,4 @@ We decided to use performance on the Complications and Readmissions & Death surv
 The aggregate score is calculated as count of Better-than-the-National-Rate survey items, normalized by the number of survey items that could be counted for the hospital, per hospital. 
 
 
-Note, the results only lists the top ten rows, which is not the top ten hospitals, thanks to ties in the scores.
+Note, the results only lists the first ten rows, which is not the top ten hospitals, thanks to ties in the scores.

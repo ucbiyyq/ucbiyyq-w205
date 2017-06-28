@@ -3,22 +3,22 @@ Based on run of best_states.sql, first 10 rows only
 
 
 state  aggregated_score
-DE      0.046153846153846156
-AR      0.026570048309178744
-NJ      0.023703703703703703
-MI      0.02268041237113402
-FL      0.021664766248574687
-VA      0.021621621621621623
-KS      0.021052631578947368
-MA      0.019417475728155338
-SC      0.01841620626151013
-NC      0.018285714285714287
+DE      0.04929577464788732
+MA      0.04059040590405904
+NJ      0.03517241379310345
+MI      0.03280839895013123
+ID      0.03201970443349754
+DC      0.031446540880503145
+IL      0.0300187617260788
+CA      0.02888852619552799
+AZ      0.027068832173240527
+FL      0.025102459016393443
 
 
 
-We decided to use performance on the Complications survey as a proxy for state performance. A list of the best states can roughly be seen as a list of states that more hospitals that did well on Complications surveys. We decided to count the number of hospitals that did well in each item of the survey.
+We decided to use performance on the Complications and Readmissions & Death surveys as a proxy for state performance. A list of the best states can roughly be seen as a list of states that more hospitals that did well on the surveys. We decided to count the number of hospitals that did better than the national rate.
 
 The aggregate score is calcuated as the count of Number-of-Hospitals-Better (than national, presumably), normalized by the number of survey items that could be counted for the state, per state.
 
 
-Note, the results only lists the top ten rows, which is not necessarily the top ten states, due to possible ties in the scores (though we don't seem to have ties with this dataset)
+Note, the results only lists the first ten rows, which is not necessarily the top ten states, due to possible ties in the scores (though we don't seem to have ties with this dataset)

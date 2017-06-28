@@ -44,11 +44,12 @@ WITH step1a AS (
     FROM hospital_compare.discover_readmissions_deaths_hospital
     WHERE compared_to_national IN ('Better than the National Rate', 'No Different than the National Rate', 'Worse than the National Rate')
 ), step1c AS (
+    --unions the relevant raw data
     SELECT * FROM step1a
     UNION ALL
     SELECT * FROM step1b
 ), step2 AS (
-    --counts the number of better, same, and worse survey items
+    --aggregates the counts
     SELECT 
         provider_id, hospital_name, 
         SUM(better_vs_national) AS better_vs_national_count, 
@@ -64,13 +65,13 @@ WITH step1a AS (
         better_vs_national_count + same_vs_national_count + worse_vs_national_count AS survey_items_count
     FROM step2
 ), step4 AS (
-    --aggregates the scores, normalized by the number of survey items
+    --normalizes the score
     SELECT
         provider_id, hospital_name, better_score, 
         (better_score) / survey_items_count AS aggregate_score
     FROM step3
 )
---finds the top ten entries by the aggregate score
+--finds the first ten entries by the aggregate score
 SELECT provider_id, hospital_name, aggregate_score
 FROM step4
 ORDER BY aggregate_score DESC, provider_id ASC
