@@ -1,6 +1,9 @@
 USE hospital_compare;
 
---hospitals that did well on the complications survey, first ten entries
+--best hospitals = those that did well in the complications and readmissions & deaths surveys
+DROP TABLE hospital_compare.discover_best_hospitals;
+
+CREATE TABLE hospital_compare.discover_best_hospitals AS
 WITH step1a AS (
     --gets relevant raw data from complications survey
     SELECT 
@@ -67,12 +70,26 @@ WITH step1a AS (
 ), step4 AS (
     --normalizes the score
     SELECT
-        provider_id, hospital_name, better_score, 
+        provider_id, hospital_name, better_score, survey_items_count,
         (better_score) / survey_items_count AS aggregate_score
     FROM step3
 )
+SELECT provider_id, hospital_name, better_score, survey_items_count, aggregate_score
+FROM step4;
+
+
+
 --finds the first ten entries by the aggregate score
-SELECT provider_id, hospital_name, aggregate_score
-FROM step4
+SELECT provider_id, hospital_name, better_score, survey_items_count, aggregate_score
+FROM hospital_compare.discover_best_hospitals
 ORDER BY aggregate_score DESC, provider_id ASC
 LIMIT 10;
+
+
+--finds the average, aggregate, and variability of the aggregate score
+SELECT 
+    MIN(aggregate_score) AS min_aggregate_score,
+    AVG(aggregate_score) AS avg_aggregate_score,
+    MAX(aggregate_score) AS max_aggregate_score,
+    MAX(aggregate_score) - MIN(aggregate_score) AS rng_aggregate_score
+FROM hospital_compare.discover_best_hospitals;

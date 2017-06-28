@@ -1,6 +1,6 @@
 USE hospital_compare;
 
---best states = those that did well in the complications survey
+--best states = those who had more hospitals who did well in the complications and readmissions & deaths surveys
 WITH step1a AS (
     --gets relevant raw data from complications survey
     SELECT 
@@ -43,12 +43,12 @@ WITH step1a AS (
 ), step4 AS (
     --normalizes the score
     SELECT
-        state, 
+        state, better_score, number_of_hospitals,
         better_score / number_of_hospitals AS aggregate_score
     FROM step3
 )
 --finds the first ten entries by the aggregate score
-SELECT state, aggregate_score
+SELECT state, better_score, number_of_hospitals, aggregate_score
 FROM step4
 ORDER BY aggregate_score DESC, state ASC
 LIMIT 10;

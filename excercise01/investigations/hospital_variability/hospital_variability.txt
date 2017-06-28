@@ -1,3 +1,2 @@
 Based on run of hospital_variability.sql, first 10 rows only
 
-
