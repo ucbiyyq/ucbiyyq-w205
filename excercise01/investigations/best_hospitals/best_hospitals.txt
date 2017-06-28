@@ -1,20 +1,20 @@
 Based on run of best_hospitals.sql, first 10 rows only
 
 provider_id  hospital_name  aggregate_score
-100087  SARASOTA MEMORIAL HOSPITAL      0.45454545454545453
-230046  UNIVERSITY OF MICHIGAN HEALTH SYSTEM    0.36363636363636365
-450184  MEMORIAL HERMANN HOSPITAL SYSTEM        0.36363636363636365
-050224  HOAG MEMORIAL HOSPITAL PRESBYTERIAN     0.3
-050708  FRESNO SURGICAL HOSPITAL        0.2857142857142857
-010039  HUNTSVILLE HOSPITAL     0.2727272727272727
-030103  MAYO CLINIC HOSPITAL    0.2727272727272727
-060010  POUDRE VALLEY HOSPITAL  0.2727272727272727
-110028  UNIVERSITY HOSPITAL     0.2727272727272727
-140119  RUSH UNIVERSITY MEDICAL CENTER  0.2727272727272727
+100087  SARASOTA MEMORIAL HOSPITAL      0.52
+340002  MEMORIAL MISSION HOSPITAL AND ASHEVILLE SURGERY CE      0.4
+040147  ARKANSAS SURGICAL HOSPITAL      0.36363636363636365
+050769  HOAG ORTHOPEDIC INSTITUTE       0.36363636363636365
+360266  MOUNT CARMEL NEW ALBANY SURGICAL HOSPITAL       0.36363636363636365
+450184  MEMORIAL HERMANN HOSPITAL SYSTEM        0.36
+050708  FRESNO SURGICAL HOSPITAL        0.3333333333333333
+030103  MAYO CLINIC HOSPITAL    0.32
+140010  EVANSTON HOSPITAL       0.32
+370210  OKLAHOMA SURGICAL HOSPITAL, LLC 0.3076923076923077
 
 
 
-We decided to use performance on the Complications survey as a proxy for hospital performance. A list of the best hospitals can roughly be seen as a list of hospitals that did well on the survey. Because the data dictionary was not clear about what score, denominator, etc meant, we decided to count the number of survey items where the hospital did better than the national rate.
+We decided to use performance on the Complications and Readmissions & Death surveys as a proxy for hospital performance. A list of the best hospitals can roughly be seen as a list of hospitals that did well on the surveys. Because the data dictionary was not clear about what score, denominator, etc meant, we decided to count the number of survey items where the hospital did better than the national rate.
 
 
 The aggregate score is calculated as count of Better-than-the-National-Rate survey items, normalized by the number of survey items that could be counted for the hospital, per hospital. 
