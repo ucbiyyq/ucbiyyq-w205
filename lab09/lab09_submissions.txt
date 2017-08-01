@@ -1,0 +1,221 @@
+1 What is the shortest path between 'DR. STRANGE/STEPHEN' and 'DR. DOOM/VICTOR VON'?
+
+MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'})
+RETURN p, length(p)
+ORDER BY length(p)
+LIMIT 1
+
+╒══════════════════════════════════════════════════════════════════════╤═══════════╕
+│"p"                                                                   │"length(p)"│
+╞══════════════════════════════════════════════════════════════════════╪═══════════╡
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":8},{"name":"DR. DOOM│1          │
+│/VICTOR VON","degree":441}]                                           │           │
+└──────────────────────────────────────────────────────────────────────┴───────────┘
+
+
+
+
+
+
+
+2 List the 5 shortest paths between 'DR. STRANGE/STEPHEN' and 'DR. DOOM/VICTOR VON'.
+
+MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'})
+RETURN p, length(p)
+ORDER BY length(p)
+LIMIT 5
+
+╒══════════════════════════════════════════════════════════════════════╤═══════════╕
+│"p"                                                                   │"length(p)"│
+╞══════════════════════════════════════════════════════════════════════╪═══════════╡
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":8},{"name":"DR. DOOM│1          │
+│/VICTOR VON","degree":441}]                                           │           │
+├──────────────────────────────────────────────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":12},{"name":"DR. DOO│1          │
+│M/VICTOR VON","degree":441}]                                          │           │
+├──────────────────────────────────────────────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":2},{"name":"THUNDERB│2          │
+│ALL/DR. ELIO","degree":138},{"name":"THUNDERBALL/DR. ELIO","degree":13│           │
+│8},{"w":6},{"name":"DR. DOOM/VICTOR VON","degree":441}]               │           │
+├──────────────────────────────────────────────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":2},{"name":"THUNDERB│2          │
+│ALL/DR. ELIO","degree":138},{"name":"THUNDERBALL/DR. ELIO","degree":13│           │
+│8},{"w":6},{"name":"DR. DOOM/VICTOR VON","degree":441}]               │           │
+├──────────────────────────────────────────────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":3},{"name":"CAPTAIN │2          │
+│BRITAIN/BRIA","degree":327},{"name":"CAPTAIN BRITAIN/BRIA","degree":32│           │
+│7},{"w":2},{"name":"DR. DOOM/VICTOR VON","degree":441}]               │           │
+└──────────────────────────────────────────────────────────────────────┴───────────┘
+
+
+
+
+
+4 List 5 Friends of Friends of 'COLOSSUS II/PETER RA' with the most connections.
+
+MATCH (colossus:Hero { name: 'COLOSSUS II/PETER RA' })-[:APPEARED*2..2]-(friend_of_friend)
+WHERE NOT (colossus)-[:APPEARED]-(friend_of_friend)
+AND friend_of_friend.name <> 'COLOSSUS II/PETER RA'
+RETURN friend_of_friend.name, COUNT(*)
+ORDER BY COUNT(*) DESC , friend_of_friend.name
+LIMIT 5
+
+╒═══════════════════════╤══════════╕
+│"friend_of_friend.name"│"COUNT(*)"│
+╞═══════════════════════╪══════════╡
+│"WONG"                 │453       │
+├───────────────────────┼──────────┤
+│"MOONSTONE II/KARLA S" │370       │
+├───────────────────────┼──────────┤
+│"CARTER, PEGGY"        │367       │
+├───────────────────────┼──────────┤
+│"POWER MAN/ERIK JOSTE" │350       │
+├───────────────────────┼──────────┤
+│"KINGPIN/WILSON FISK"  │342       │
+└───────────────────────┴──────────┘
+
+
+
+
+5 Visualize 10 Friends of friends for 'IRON MAN/TONY STARK'.
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 3
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 4
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WASP/JANET VAN DYNE","degree":778} │
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 5
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WASP/JANET VAN DYNE","degree":778} │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"ANT-MAN/DR. HENRY J.","degree":775}│
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 6
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WASP/JANET VAN DYNE","degree":778} │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"ANT-MAN/DR. HENRY J.","degree":775}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WONDER MAN/SIMON WIL","degree":729}│
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 7
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WASP/JANET VAN DYNE","degree":778} │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"ANT-MAN/DR. HENRY J.","degree":775}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WONDER MAN/SIMON WIL","degree":729}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"HAWK","degree":880}                │
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+
+
+MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+RETURN tony, donald, other
+ORDER BY e.w DESC, f.w DESC
+LIMIT 8
+
+graph appears to be fully connected
+
+╒════════════════════════════════════════════╤════════════════════════════════════════════╤════════════════════════════════════════════╕
+│"tony"                                      │"donald"                                    │"other"                                     │
+╞════════════════════════════════════════════╪════════════════════════════════════════════╪════════════════════════════════════════════╡
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"CAPTAIN AMERICA","degree":1426}    │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"SCARLET WITCH/WANDA","degree":1004}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"VISION","degree":919}              │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WASP/JANET VAN DYNE","degree":778} │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"ANT-MAN/DR. HENRY J.","degree":775}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"WONDER MAN/SIMON WIL","degree":729}│
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"HAWK","degree":880}                │
+├────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+│{"name":"IRON MAN/TONY STARK","degree":1132}│{"name":"THOR/DR. DONALD BLAK","degree":947}│{"name":"IRON MAN IV/JAMES R.","degree":338}│
+└────────────────────────────────────────────┴────────────────────────────────────────────┴────────────────────────────────────────────┘
